@@ -1,0 +1,91 @@
+﻿<Page xmlns:my="using:Microsoft.UI.Xaml.Controls" 
+    x:Class="MystropolisExclusive.AdminPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MystropolisExclusive"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Background="#F0F0F0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <RelativePanel Grid.Column="0" Width="Auto" >
+                <Button Content="Back" Width="Auto" Click="Button_Click" />
+            </RelativePanel>
+            <RelativePanel Grid.Column="1" Width="Auto" Margin="16,16,16,16" >
+                <StackPanel x:Name="MystiCode" RequestedTheme="Default">
+                    <TextBlock x:Name="MystiCodeHeader" Text="Add/edit mysticode" FontSize="14" FontWeight="Bold" />
+                    <TextBlock x:Name="ErrorMessage" Text="An error occurred" Foreground="Red" Visibility="Collapsed" />
+                    <TextBox x:Name="Code" Header= "Code" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" />
+                    <TextBox x:Name="Video" Header= "Video name" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" />
+                    <CheckBox x:Name="Used" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" Content="Used" IsChecked="True" Visibility="Collapsed" />
+                    <CheckBox x:Name="OneTimeUse" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" Content="One time only" IsChecked="True" />
+                    <TextBox x:Name="MinimumDuration" Header= "Minimum duration (seconds)" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" />
+                    <TextBox x:Name="Remarks" Header= "Remarks" Margin="0,8,0,0" HorizontalAlignment="Left" AcceptsReturn="True" TextWrapping="Wrap" Width="400" Height="97" />
+                </StackPanel>
+                <StackPanel x:Name="MystiCodeActions" Orientation="Horizontal" RelativePanel.Below="MystiCode" Margin="0,16,0,0">
+                    <Button x:Name="CancelButton" Content="Cancel" Margin="0,0,16,0" Visibility="Collapsed" Click="CancelButton_Click" />
+                    <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" />
+                </StackPanel>
+            </RelativePanel>
+            <RelativePanel Grid.Column="2" Width="Auto" Margin="16,16,16,16" >
+                <StackPanel x:Name="MystiSettings" RequestedTheme="Default">
+                    <TextBlock x:Name="SettingsHeader" Text="Settings" FontSize="14" FontWeight="Bold" />
+                    <TextBox x:Name="CountdownDuration" Header= "Countdown duration" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" />
+                    <TextBox x:Name="VideoFolderName" Header= "Video folder name" Margin="0,8,0,0" HorizontalAlignment="Left" Width="400" />
+                </StackPanel>
+                <StackPanel x:Name="MystiSettingsActions" Orientation="Horizontal" RelativePanel.Below="MystiSettings" Margin="0,16,0,0">
+                    <Button x:Name="MystiSettingsSaveButton" Content="Save" Click="MystiSettingsSaveButton_Click" />
+                </StackPanel>
+            </RelativePanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <controls:DataGrid 
+                x:Name="CodesGrid"
+                CanUserSortColumns="True"
+                BorderBrush="DarkSlateGray"
+                AutoGenerateColumns="False" 
+                GridLinesVisibility="All" 
+                Sorting="CodesGrid_Sorting" 
+                SelectionMode="Single"
+                ItemsSource="{x:Bind collection, Mode=TwoWay}"
+                >
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Code" Binding="{Binding Code}" />
+                    <controls:DataGridTextColumn Header="Video" Binding="{Binding Video}" />
+                    <controls:DataGridTextColumn Header="OneTimeUse" Binding="{Binding OneTimeUse}" CanUserSort="False" />
+                    <controls:DataGridTextColumn Header="Used" Binding="{Binding Used}" />
+                    <controls:DataGridTextColumn CanUserSort="False" Header="MinimumDuration" Binding="{Binding MinimumDuration}" />
+                    <controls:DataGridTemplateColumn CanUserSort="False" Width="Auto" CanUserResize="False">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" Click="EditButton_Click"  />
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
+                    <controls:DataGridTemplateColumn CanUserSort="False" Width="Auto" CanUserResize="False">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" Click="DeleteButton_Click" />
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
+                    <controls:DataGridTextColumn Header="Remarks" Binding="{Binding Remarks}" />
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+        </Grid>
+    </Grid>
+</Page>
